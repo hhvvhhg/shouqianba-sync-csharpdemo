@@ -63,6 +63,25 @@ namespace shouqianba_sync_csharpdemo.demo
         }
 
 
+        public static string urlCode()
+        {
+            string vendorSn = "28910391282321983";
+            string vendorKey = "7f3804007bf8408293b8ebb8157fc0fb";
+            string wx_service_baseurl = "https://m.testalpha.wosai.com/wxservice/check.do";
+            string appid = "2017891823646";
+            string redirect_user_uri = "https://einvoice.testalpha.shouqianba.com/xxxx/xxxx/h5";
+            string baseStateParameter = "p=1,100|ts=10000058909032923|cs=201709280028392|ct=1506484936867|ta=10000|bc=0";
+            string sign = getSign(baseStateParameter + vendorKey);
+            string a = vendorSn + " " + sign;
+            string state = baseStateParameter + "|" + "a=" + a;
+            string encodedState = Uri.EscapeDataString(state);
+            string redirect = Uri.EscapeDataString(redirect_user_uri);
+            string qrcodeUrl = wx_service_baseurl + "?appid=" + appid + "&redirect_user_uri=" + redirect + "&state=" + encodedState + "&e=y";
+
+            return qrcodeUrl;
+        }
+
+
         private static string getSign(string signStr)
         {
             string md5 = MD5(signStr);
